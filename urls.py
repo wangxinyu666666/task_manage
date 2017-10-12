@@ -1,6 +1,7 @@
 import tornado.web
 from views import LoginInHandler, TotalTaskHandler, AddTaskHandler
 from views import AllPeopleHandler, PersonIndexHandler
+from views import DivideTaskHandler
 
 
 SETTINGS = {
@@ -13,6 +14,7 @@ HANDLERS = [
     (r"/NewTask", AddTaskHandler),
     (r"/Stu/MyTask", PersonIndexHandler),
     (r"/AllPeople", AllPeopleHandler),
+    (r"/managetask", DivideTaskHandler),
 ]
 
 application = tornado.web.Application(

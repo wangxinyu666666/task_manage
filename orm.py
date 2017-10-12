@@ -7,12 +7,12 @@ from playhouse.shortcuts import model_to_dict
 
 my_database = MySQLDatabase(host='127.0.0.1', user='root', passwd='123456',
                             database='task_manage')
-my_database.connect()
+# my_database.connect()
 
 
 class MyBaseModel(Model):
     class Meta:
-        global my_database
+        # global my_database
         database = my_database
 
 

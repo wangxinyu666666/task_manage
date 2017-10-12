@@ -44,5 +44,6 @@ class PersonIndex(person_index):
             tasks.append({"project": "", "actor": "", "OnePer": ""})
 
         percent = str(user_data[0].taskFinished) + "%"
+
         return {"MyTask": tasks, "percent": percent}
     

@@ -36,6 +36,6 @@ class AllPeople(all_people):
             table_data.append({"name": str(data["userName"]),
                                "doing": str(data["taskNowTime"]),
                                "done": str(data["taskFinished"])})
-
+        
         return json.dumps({"tableData": table_data}, ensure_ascii=False)
 

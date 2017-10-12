@@ -2,6 +2,7 @@ from api_define import total_task
 from orm import main_task
 import datetime
 import json
+from peewee import MySQLDatabase
 
 
 class TotalTask(total_task):

@@ -12,7 +12,7 @@ class AddTask(add_task):
           "date1": "",
           "date2": "2017-2-1",
           "leader":"xxx",
-          "member":"陈飞坤，彭一",
+          "member": ["陈飞坤", "彭一"],
           "goal": "100%",//目标百分比
           "desc": "asdasddf"//需求描述
         }
@@ -34,8 +34,7 @@ class AddTask(add_task):
         if not leader:
             return {"result": "mistake"}
         member_ids = []
-        member_names = data["member"].split("，")
-        for name in member_names:
+        for name in data["member"]:
             user_data = user.select(user.userID).where(
                 user.userName == name)
             if not user_data:
@@ -44,9 +43,9 @@ class AddTask(add_task):
         data["member"] = str(member_ids)
         data["goal"] = int(data["goal"][:-1])
         main_task.create(**{"name": data["name"], "leader": data["leader"],
-                            "member": data["member"], "totalWeight": data["goal"],
-                            "childTask": "", "startTime": data["date1"],
-                            "endTime": data["date2"], "describe": data["desc"]})
+                            "member": data["member"], "childTask": "",
+                            "totalWeight": data["goal"],
+                            "startTime": data["date1"],
+                            "endTime": data["date2"],
+                            "describe": data["desc"]})
         return {"result": "success"}
-        
-
