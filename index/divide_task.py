@@ -55,20 +55,22 @@ class DivideTask(divide_task):
                     user_data["taskFinished"] = int(user_data["taskFinished"]) - int(child["childWeight"])
                     if not child["status"]:
                         user_data["taskNowTime"] = int(user_data["taskNowTime"]) - int(child["childWeight"])
-                    user_data["childID"] = list(user_data["childID"]).remove(int(child["id"]))
+                    user_data["childID"] = ast.literal_eval(user_data["childID"])
+                    user_data["childID"] = user_data["childID"].remove(int(child["id"]))
+                    user_data["childID"] = str(user_data["childID"])
                     user.update(**{"taskFinished": user_data["taskFinished"],
-                                "taskNowTime": user_data["taskNowTime"],
-                                "childID": user_data["childID"]}).where(
+                                   "taskNowTime": user_data["taskNowTime"],
+                                   "childID": user_data["childID"]}).where(
                                     user.userName == child["person"]).execute()
-                # 对main_task修改
-                main_task_data = main_task.select(main_task.childTask).where(
-                    main_task.name == task_name)
-                main_task_data = model_to_dict(main_task_data[0])
-                main_task_data["childTask"] = list(main_task_data["childTask"])
-                for child_id in id_list:
-                    main_task_data["childTask"].remove(child_id)
-                main_task.update(**{"childTask": str(main_task_data["childTask"])}
-                                 ).where(main_task.name == task_name).execute()
+                # # 对main_task修改
+                # main_task_data = main_task.select(main_task.childTask).where(
+                #     main_task.name == task_name)
+                # main_task_data = model_to_dict(main_task_data[0])
+                # main_task_data["childTask"] = ast.literal_eval(main_task_data["childTask"])
+                # for child_id in id_list:
+                #     main_task_data["childTask"].remove(child_id)
+                # main_task.update(**{"childTask": str(main_task_data["childTask"])}
+                #                  ).where(main_task.name == task_name).execute()
                 self.insert_data(task_name, child_data)
                 return {"info": "update success"}
 
@@ -89,14 +91,16 @@ class DivideTask(divide_task):
                                  "describe": data["misdetail"]})
             child_ids = child_task.select(child_task.id).where(
                             child_task.name == data["misname"])
-            id_list.append(int(child_ids[0].id))
+            child_ids = model_to_dict(child_ids[0])
+            id_list.append(int(child_ids["id"]))
             user_data = user.select(user.taskNowTime,
                                     user.taskFinished,
                                     user.childID).where(
                         user.userName == data["mispeo"])
             user_data = model_to_dict(user_data[0])
-            user_data["childID"] = str(list(user_data["childID"]
-                                            ).append(child_ids[0].id))
+            user_data["childID"] = ast.literal_eval(user_data["childID"])
+            user_data["childID"].append(child_ids["id"])
+            user_data["childID"] = str(user_data["childID"])
             if not data["miscon"]:
                 user_data["taskNowTime"] = int(user_data["taskNowTime"]) + int(data["misper"])
             user_data["taskFinished"] = int(user_data["taskFinished"]) + int(data["misper"])
@@ -105,5 +109,5 @@ class DivideTask(divide_task):
                         "taskNowTime": user_data["taskNowTime"]}
                         ).where(user.userName == data['mispeo']).execute()
                 
-        main_task.update(**{"childTask": str(list(main_task.childTask).extend(id_list))}
+        main_task.update(**{"childTask": str(id_list)}
                          ).where(main_task.name == task_name)

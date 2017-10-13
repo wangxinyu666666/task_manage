@@ -1,5 +1,5 @@
 from api_define import add_task
-from orm import user, main_task
+from orm import user, main_task, model_to_dict
 import ast
 
 
@@ -29,16 +29,19 @@ class AddTask(add_task):
 
     def add_task(self, data):
         # 将组员名字转换为id
+        exist = main_task.select(main_task.id).where(main_task.name == data["name"])
+        if exist:
+            return {"info": "task already exist"}
         leader = user.select(user.userName).where(
             user.userName == data["leader"])
         if not leader:
             return {"result": "mistake"}
         member_ids = []
+        members = data["member"]
         for name in data["member"]:
+            # 将名字转换为id
             user_data = user.select(user.userID).where(
                 user.userName == name)
-            if not user_data:
-                return {"result": "mistake"}
             member_ids.append(user_data[0].userID)
         data["member"] = str(member_ids)
         data["goal"] = int(data["goal"][:-1])
@@ -48,4 +51,18 @@ class AddTask(add_task):
                             "startTime": data["date1"],
                             "endTime": data["date2"],
                             "describe": data["desc"]})
+        # 将main_task的Id加入每个组员的数据库中
+        main_id = main_task.select(main_task.id).where(main_task.name == data["name"])
+        main_id = model_to_dict(main_id[0])
+        for name in members:
+            task = user.select(user.mainID).where(user.userName == name)
+            task = model_to_dict(task[0])
+            if task["mainID"] == "":
+                ID = [main_id["id"]]
+                ID = str(ID)
+            else:
+                ID = ast.literal_eval(task["mainID"])
+                ID.append(main_id["id"])
+                ID = str(ID)
+            user.update(**{"mainID": ID}).where(user.userName == name).execute()
         return {"result": "success"}

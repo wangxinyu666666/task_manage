@@ -1,5 +1,6 @@
 from api_define import person_index
 from orm import user, main_task, child_task
+import ast
 
 
 class PersonIndex(person_index):
@@ -25,12 +26,12 @@ class PersonIndex(person_index):
         user_data = user.select(user.mainID, user.taskFinished, user.childID) \
                         .where(user.userName == name)
         tasks = []
-        child_id = list(user_data[0].childID)
+        child_id = (user_data[0].childID)
         main_task_data = main_task.select(main_task.name, main_task.leader,
                                           main_task.childTask)
         if main_task_data:
             for task in main_task_data:
-                ids = list(task.childTask)
+                ids = ast.literal_eval(task.childTask)
                 oneper = 0
                 for num in ids:
                     if num in child_id:

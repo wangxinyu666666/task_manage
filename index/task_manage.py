@@ -1,6 +1,7 @@
 from api_define import task_manage
 from orm import user, main_task, child_task, model_to_dict
 import json
+import ast
 
 
 class TaskManage(task_manage):
@@ -40,7 +41,7 @@ class TaskManage(task_manage):
             tasks[0].endTime = str(tasks[0].endTime.date())
             tasks = model_to_dict(tasks[0])
             # 将id转换为组员名字
-            members = list(tasks[0].member)
+            members = ast.literal_eval(tasks[0].member)
             members_str = ""
             for member_id in members:
                 member = user.select(user.userName).where(
@@ -49,7 +50,7 @@ class TaskManage(task_manage):
             members_str = members_str[:-1]
             # 将id转换为子任务信息
             child_tasks = []
-            childs = list(tasks[0].childTask)
+            childs = ast.literal_eval(tasks[0].childTask)
             for child_id in childs:
                 sub_task = child_task.select(child_task.name,
                                              child_task.person,

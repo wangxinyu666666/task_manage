@@ -2,6 +2,7 @@
 from api_define import show_tasks
 from orm import my_database, user, main_task, child_task, model_to_dict
 import json
+import ast
 
 
 class ShowTasks(show_tasks):
@@ -40,28 +41,30 @@ class ShowTasks(show_tasks):
             task[0].endTime = task[0].endTime.date()
             # 将成员Id转换为名字
             members = []
-            for member_id in list(task[0].member):
+            for member_id in ast.literal_eval(task[0].member):
                 member = user.select(user.userName).where(user.userID == member_id)
                 members.append(str(member[0].userName))
             task = model_to_dict(task[0])
 
             # 将子任务id转换为详情
             task_detail = []
-            for task_id in list(task["childTask"]):
-                sub_task = child_task.select(child_task.name, child_task.person,
-                    child_task.childWeight, child_task.status,
-                    child_task.endTime, child_task.describe)
-                sub_task[0].endTime = sub_task[0].endTime.date()
-                sub_task = model_to_dict(sub_task[0])
-                sub_task["status"] = "完成" if sub_task["status"] == 1 else "未完成"
-                task_detail.append({"misname": sub_task["name"],
-                    "mispeo": sub_task["person"], "misper": sub_task["childWeight"],
-                    "miscon": sub_task["status"], "misend": sub_task["endTime"],
-                    "misdetail": sub_task["describe"]})
+            if task["childTask"] != "":
+                for task_id in ast.literal_eval(task["childTask"]):
+                    sub_task = child_task.select(child_task.name, child_task.person,
+                        child_task.childWeight, child_task.status,
+                        child_task.endTime, child_task.describe)
+                    sub_task[0].endTime = sub_task[0].endTime.date()
+                    sub_task = model_to_dict(sub_task[0])
+                    sub_task["status"] = "完成" if sub_task["status"] == 1 else "未完成"
+                    task_detail.append({"misname": sub_task["name"],
+                        "mispeo": sub_task["person"], "misper": sub_task["childWeight"],
+                        "miscon": sub_task["status"], "misend": sub_task["endTime"],
+                        "misdetail": sub_task["describe"]})
                 
-            data = {"start": task["startTime"], "end": task["endTime"],
+            data = {"start": str(task["startTime"]), "end": str(task["endTime"]),
                     "actor": task["leader"], "groPeo": members,
                     "desc": task["describe"], "TaskDetail": task_detail}
             return json.dumps(data, ensure_ascii=False)
-        except:
+        except Exception as e:
+            print(e)
             return {"info": "database error"}
