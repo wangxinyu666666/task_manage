@@ -1,0 +1,12 @@
+{"MyTask":[{
+      "project":"实验室任务管理",
+      "actor":"组长",
+      "OnePer":"60%"
+    },
+    {
+      "project":"DNS攻防系统",
+      "actor":"组员",
+      "OnePer":"10%"
+    }],
+"percent":"60%"
+}
