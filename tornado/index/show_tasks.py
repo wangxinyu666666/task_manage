@@ -26,6 +26,7 @@ class ShowTasks(show_tasks):
     def entry(self, request):
         try:
             task_name = request.get_argument("task")
+            print(task_name)
             return self.get_data(task_name)
         except:
             return {"info": "missing argument"}
@@ -33,8 +34,10 @@ class ShowTasks(show_tasks):
     def get_data(self, task_name):
         try:
             task = main_task.select(main_task.startTime, main_task.endTime,
-                main_task.leader, main_task.member, main_task.describe,
-                main_task.childTask).where(main_task.name == task_name)
+                                    main_task.leader, main_task.member,
+                                    main_task.describe,
+                                    main_task.childTask).where(
+                                        main_task.name == task_name)
             if not task:
                 return {"info": "no such task"}
             task[0].startTime = task[0].startTime.date()
