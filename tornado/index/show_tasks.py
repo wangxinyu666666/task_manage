@@ -26,7 +26,6 @@ class ShowTasks(show_tasks):
     def entry(self, request):
         try:
             task_name = request.get_argument("task")
-            print(task_name)
             return self.get_data(task_name)
         except:
             return {"info": "missing argument"}
@@ -61,7 +60,7 @@ class ShowTasks(show_tasks):
                     sub_task["status"] = "完成" if sub_task["status"] == 1 else "未完成"
                     task_detail.append({"misname": sub_task["name"],
                         "mispeo": sub_task["person"], "misper": sub_task["childWeight"],
-                        "miscon": sub_task["status"], "misend": sub_task["endTime"],
+                        "miscon": sub_task["status"], "misend": str(sub_task["endTime"]),
                         "misdetail": sub_task["describe"]})
                 
             data = {"start": str(task["startTime"]), "end": str(task["endTime"]),
