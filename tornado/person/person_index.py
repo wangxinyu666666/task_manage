@@ -1,6 +1,7 @@
-from api_define import person_index
-from orm import user, main_task, child_task
 import ast
+import json
+from api_define import person_index
+from orm import user, main_task, child_task, model_to_dict
 
 
 class PersonIndex(person_index):
@@ -25,26 +26,34 @@ class PersonIndex(person_index):
     def get_data(self, name):
         user_data = user.select(user.mainID, user.taskFinished, user.childID) \
                         .where(user.userName == name)
-        tasks = []
-        child_id = (user_data[0].childID)
-        main_task_data = main_task.select(main_task.name, main_task.leader,
-                                          main_task.childTask)
-        if main_task_data:
-            for task in main_task_data:
-                ids = ast.literal_eval(task.childTask)
-                oneper = 0
-                for num in ids:
-                    if num in child_id:
-                        child_task_data = child_task.select(
-                            child_task.childWeight).where(child_task.id == num)
-                        oneper += int(child_task_data[0].childWeight)
-                OnePer = str(oneper) + "%"
-                tasks.append({"project": task.name, "actor": task.leader,
-                              "OnePer": OnePer})
+        user_data = model_to_dict(user_data[0])
+        if user_data["childID"] == "":
+            user_data["childID"] = []
         else:
-            tasks.append({"project": "", "actor": "", "OnePer": ""})
+            user_data["childID"] = ast.literal_eval(user_data["childID"])
+        if user_data["mainID"] == "":
+            user_data["mainID"] = []
+        else:
+            user_data["mainID"] = ast.literal_eval(user_data["mainID"])
+        tasks = []
+        for main_id in user_data["mainID"]:
+            task = main_task.select(main_task.name, main_task.leader, main_task.childTask) \
+                            .where(main_task.id == main_id)
+            task = model_to_dict(task[0])
+            if task["childTask"] == "":
+                task["childTask"] = []
+            else:
+                task["childTask"] = ast.literal_eval(task["childTask"])
+            percen = 0
+            for ID in task["childTask"]:
+                if ID in user_data["childID"]:
+                    sub_task = child_task.select(child_task.childWeight).where(child_task.id == ID)
+                    percen += int(sub_task[0].childWeight)
+            percen = str(percen) + "%"
+            tasks.append({"project": task["name"], "actor": task["leader"],
+                          "OnePer": percen})
 
-        percent = str(user_data[0].taskFinished) + "%"
+        percent = str(user_data["taskFinished"]) + "%"
 
-        return {"MyTask": tasks, "percent": percent}
+        return json.dumps({"MyTask": tasks, "percent": percent}, ensure_ascii=False)
     

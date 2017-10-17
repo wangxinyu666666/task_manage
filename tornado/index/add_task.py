@@ -65,4 +65,14 @@ class AddTask(add_task):
                 ID.append(main_id["id"])
                 ID = str(ID)
             user.update(**{"mainID": ID}).where(user.userName == name).execute()
+        # 将main_task的ID加入组长的数据库中
+        lead_main_id = user.select(user.mainID).where(user.userName == data["leader"])
+        lead_main_id = model_to_dict(lead_main_id[0])
+        if lead_main_id["mainID"] == "":
+            lead_main_id["mainID"] = [main_id["id"]]
+        else:
+            lead_main_id["mainID"] = ast.literal_eval(lead_main_id["mainID"])
+            lead_main_id["mainID"].append(main_id["id"])
+        lead_main_id["mainID"] = str(lead_main_id["mainID"])
+        user.update(**{"mainID": lead_main_id["mainID"]}).where(user.userName == data["leader"]).execute()
         return {"result": "success"}
