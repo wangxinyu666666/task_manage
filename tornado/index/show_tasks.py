@@ -43,7 +43,8 @@ class ShowTasks(show_tasks):
             task[0].endTime = task[0].endTime.date()
             # 将成员Id转换为名字
             members = []
-            for member_id in ast.literal_eval(task[0].member):
+            task[0].member = ast.literal_eval(task[0].member)
+            for member_id in task[0].member:
                 member = user.select(user.userName).where(user.userID == member_id)
                 members.append(str(member[0].userName))
             task = model_to_dict(task[0])
@@ -51,10 +52,11 @@ class ShowTasks(show_tasks):
             # 将子任务id转换为详情
             task_detail = []
             if task["childTask"] != "":
-                for task_id in ast.literal_eval(task["childTask"]):
+                task["childTask"] = ast.literal_eval(task["childTask"])
+                for task_id in task["childTask"]:
                     sub_task = child_task.select(child_task.name, child_task.person,
                         child_task.childWeight, child_task.status,
-                        child_task.endTime, child_task.describe)
+                        child_task.endTime, child_task.describe).where(child_task.id == task_id)
                     sub_task[0].endTime = sub_task[0].endTime.date()
                     sub_task = model_to_dict(sub_task[0])
                     sub_task["status"] = "完成" if sub_task["status"] == 1 else "未完成"
