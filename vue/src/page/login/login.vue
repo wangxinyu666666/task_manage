@@ -69,8 +69,8 @@ export default{
                      };
                      //表单验证通过axios验证方法实现(这里需要改一下)
                     // if (loginParams.username == "admin" && loginParams.password == "123456")
-                //   Axios.get('/api/login?name='+loginParams.username+'&pass='+loginParams.password).
-                     Axios.get('./mock/login.json').
+                   Axios.get('/api/login?name='+loginParams.username+'&pass='+loginParams.password).
+                //     Axios.get('./mock/login.json').
                    then(function(res){
                       // console.log(res.data.status);
                        if(res.data.status==1)
