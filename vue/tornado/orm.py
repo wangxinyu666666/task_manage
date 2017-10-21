@@ -20,7 +20,7 @@ class user(MyBaseModel):
     userID = CharField()
     userName = CharField()
     userPass = CharField()
-    isBoss = IntegerField()  # 1表示是学长，０表示不是,2表示冻结
+    isBoss = IntegerField()  # 1表示是学长，０表示不是
     taskNowTime = IntegerField()
     taskFinished = IntegerField()
     mainID = CharField()   # 以字符串形式存储，“[id1,id2,id3]”

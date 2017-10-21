@@ -50,26 +50,3 @@ class show_tasks():
 
     def entry(self, request):
         pass
-
-
-class add_person():
-
-    def entry(self, request):
-        pass
-
-
-class delete_person():
-
-    def entry(self, request):
-        pass
-
-
-class reset_password():
-
-    def entry(self, request):
-        pass
-
-
-class get_member():
-    def entry(self, request):
-        pass

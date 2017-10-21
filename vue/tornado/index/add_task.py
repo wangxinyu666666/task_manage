@@ -40,9 +40,9 @@ class AddTask(add_task):
         members = data["member"]
         for name in data["member"]:
             # 将名字转换为id
-            user_data = user.select(user.id).where(
+            user_data = user.select(user.userID).where(
                 user.userName == name)
-            member_ids.append(user_data[0].id)
+            member_ids.append(user_data[0].userID)
         data["member"] = str(member_ids)
         data["goal"] = int(data["goal"][:-1])
         main_task.create(**{"name": data["name"], "leader": data["leader"],

@@ -1,28 +1,20 @@
 import tornado.web
 from views import LoginInHandler, TotalTaskHandler, AddTaskHandler
 from views import AllPeopleHandler, PersonIndexHandler
-from views import DivideTaskHandler, IndexHandler
-from views import DeletePersonHandler, AddPersonHandler, ResetPasswordHandler
-import os
+from views import DivideTaskHandler
 
 
 SETTINGS = {
-    "debug": True,
-    "template_path": os.path.join(os.path.dirname(__file__), "templates"),
-    "static_path": os.path.join(os.path.dirname(__file__), "static"),
+    "debug": True
 }
 
 HANDLERS = [
-    (r"/", IndexHandler),
     (r"/login", LoginInHandler),
-    (r"/api/stu", TotalTaskHandler),
-    (r"/api/NewTask", AddTaskHandler),
-    (r"/api/Stu/MyTask", PersonIndexHandler),
-    (r"/api/AllPeople", AllPeopleHandler),
-    (r"/api/managetask", DivideTaskHandler),
-    (r"/api/deletePerson", DeletePersonHandler),
-    (r"/api/addPerson", AddPersonHandler),
-    (r"/api/resetPassword", ResetPasswordHandler),
+    (r"/stu", TotalTaskHandler),
+    (r"/NewTask", AddTaskHandler),
+    (r"/Stu/MyTask", PersonIndexHandler),
+    (r"/AllPeople", AllPeopleHandler),
+    (r"/managetask", DivideTaskHandler),
 ]
 
 application = tornado.web.Application(
