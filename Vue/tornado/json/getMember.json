@@ -1,0 +1,10 @@
+// GET
+
+{
+    "url": "/api/getMember"
+}
+
+// response
+{
+    "member": ["xxx", "xxx", "xxx"]
+}
