@@ -1,0 +1,17 @@
+// POST
+
+{
+    "url": "/api/deletePerson"
+}
+
+// request
+{
+    "name": "xxx"
+}
+
+// response
+// success
+{"info": "success"}
+
+// fail
+{"info": "error"}

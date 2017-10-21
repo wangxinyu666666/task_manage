@@ -1,0 +1,17 @@
+// POST
+
+{
+    "url": "/api/addPerson"
+}
+// request
+{
+    "name": "xxx",
+    "pswd": "xxxxx"
+}
+
+// reponse
+// success
+{"info": "success"}
+
+// fail
+{"info": "error"}

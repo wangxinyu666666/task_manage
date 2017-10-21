@@ -45,7 +45,7 @@ class ShowTasks(show_tasks):
             members = []
             task[0].member = ast.literal_eval(task[0].member)
             for member_id in task[0].member:
-                member = user.select(user.userName).where(user.userID == member_id)
+                member = user.select(user.userName).where(user.id == member_id)
                 members.append(str(member[0].userName))
             task = model_to_dict(task[0])
 

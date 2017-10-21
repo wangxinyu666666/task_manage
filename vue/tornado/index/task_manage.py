@@ -45,7 +45,7 @@ class TaskManage(task_manage):
             members_str = ""
             for member_id in members:
                 member = user.select(user.userName).where(
-                                  user.userID == member_id)
+                                  user.id == member_id)
                 members_str = members_str + str(member[0].userName) + "，"
             members_str = members_str[:-1]
             # 将id转换为子任务信息
