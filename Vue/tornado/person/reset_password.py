@@ -21,7 +21,8 @@ class ResetPassword(reset_password):
     失败{"info": "error"}
     """
     def entry(self, request):
-        data = ast.literal_eval(request.request.body)
+        data = request.request.body.decode()
+        data = ast.literal_eval(data)
         return self.reset_pass(data)
 
     def reset_pass(self, data):

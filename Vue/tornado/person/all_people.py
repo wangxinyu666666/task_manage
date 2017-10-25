@@ -27,7 +27,7 @@ class AllPeople(all_people):
 
     def get_data(self):
         user_data = user.select(user.userName, user.taskNowTime,
-                                user.taskFinished)
+                                user.taskFinished).where(user.isBoss != 2)
         table_data = []
         for data in user_data:
             data = model_to_dict(data)

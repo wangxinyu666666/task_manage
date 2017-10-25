@@ -27,12 +27,15 @@ class AddPerson(add_person):
             password = data["pswd"]
         except KeyError:
             return {"info": "error"}
+        user_data = user.select().where(user.userName == name, user.isBoss == 0)
+        if user_data:
+            return {"info": "already exist"}
         md5 = hashlib.md5()
         md5.update(password.encode('utf-8'))
         hashed_password = md5.hexdigest()
         user.create(**{"userID": "", "userName": name, "userPass": hashed_password,
                        "isBoss": 0, "taskNowTime": 0, "taskFinished": 0,
                        "mainID": "", "childID": ""})
-        user_id = user.select(user.id).where(user.userName == name)
+        user_id = user.select(user.id).where(user.userName == name, user.isBoss == 0)
         user.update(**{"userID": user_id[0].id}).where(user.userName == name).execute()
         return {"info": "success"}
