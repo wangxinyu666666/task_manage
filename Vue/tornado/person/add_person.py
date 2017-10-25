@@ -17,7 +17,8 @@ class AddPerson(add_person):
     失败时{"info": "error"}
     '''
     def entry(self, request):
-        data = ast.literal_eval(request.request.body)
+        data = request.request.body.decode()
+        data = ast.literal_eval(data)
         return self.add_user(data)
 
     def add_user(self, data):

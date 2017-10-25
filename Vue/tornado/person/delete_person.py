@@ -15,7 +15,8 @@ class DeletePerson(delete_person):
     失败：{"info": "error"}
     """
     def entry(self, request):
-        data = ast.literal_eval(request.request.body)
+        data = request.request.body.decode()
+        data = ast.literal_eval(data)
         return self.reset_data(data)
 
     def reset_data(self, data):

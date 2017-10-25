@@ -19,6 +19,6 @@ class GetMember(get_member):
         users = user.select(user.userName).where(user.isBoss == 0)
         member = []
         for user_data in users:
-            user_data = model_to_dict(user)
+            user_data = model_to_dict(user_data)
             member.append(user_data["userName"])
         return json.dumps({"member": member}, ensure_ascii=False)

@@ -7,6 +7,7 @@ from index.divide_task import DivideTask
 from index.task_manage import TaskManage
 from index.member_manage import MemberManage
 from index.show_tasks import ShowTasks
+from index.get_member import GetMember
 from person.person_index import PersonIndex
 from person.all_people import AllPeople
 from person.add_person import AddPerson
@@ -128,3 +129,11 @@ class ResetPasswordHandler(BaseHandler):
     '''
     def post(self):
         self.finish(ResetPassword().entry(self))
+
+
+class GetMemberHandler(BaseHandler):
+    """
+    获取成员列表
+    """
+    def get(self):
+        self.finish(GetMember().entry(self))

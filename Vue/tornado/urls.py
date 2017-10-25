@@ -3,6 +3,7 @@ from views import LoginInHandler, TotalTaskHandler, AddTaskHandler
 from views import AllPeopleHandler, PersonIndexHandler
 from views import DivideTaskHandler, IndexHandler
 from views import DeletePersonHandler, AddPersonHandler, ResetPasswordHandler
+from views import GetMemberHandler
 import os
 
 
@@ -23,6 +24,7 @@ HANDLERS = [
     (r"/api/deletePerson", DeletePersonHandler),
     (r"/api/addPerson", AddPersonHandler),
     (r"/api/resetPassword", ResetPasswordHandler),
+    (r"/api/getMember", GetMemberHandler)
 ]
 
 application = tornado.web.Application(
