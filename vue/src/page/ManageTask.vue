@@ -232,9 +232,6 @@ export default{
         { required: true, message: '请输入任务名', trigger: 'blur' },
         { min: 1 , message: '长度在至少1个字', trigger: 'blur' }
       ],
-      type: [
-        { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-      ],
       misdetail: [
         { required: true, message: '请填写任务的详细信息', trigger: 'blur' }
       ]

@@ -1,6 +1,15 @@
 <template>
     <div>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="margin-left:150px;">
+      <div id="steps">
+        <el-steps :space="400" :active="1" finish-status="success">
+           <el-step title="发布任务" ></el-step>
+           <el-step title="任务划分"></el-step>
+           <el-step title="查看详情"></el-step>
+         </el-steps>
+      </div>
+
+        <div id="demo-ruleForm">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" style="margin-left:150px;">
   			<el-form-item label="任务名称" prop="name" style="width: 500px;">
     			<el-input v-model="ruleForm.name"></el-input>
   			</el-form-item>
@@ -50,6 +59,7 @@
 	  		</el-form-item>
 		</el-form>
     </div>
+ </div>
 </template>
 <script>
 import Axios from 'axios';
@@ -128,7 +138,6 @@ import Moment from 'moment'
       },
       submitForm(formName) {
 
-        var _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
           var mydata={"name":this.ruleForm.name,"date1":this.date1,"date2":this.date2,"leader":this.ruleForm.leader,"member":this.ruleForm.member,"goal":this.ruleForm.goal,"desc":this.ruleForm.desc};
@@ -160,3 +169,15 @@ import Moment from 'moment'
     }
   }
 </script>
+
+<style>
+#steps{
+  position: absolute;
+  left:28%
+}
+#demo-ruleForm{
+  position: relative;
+  top:80px;
+  left:8%
+}
+</style>

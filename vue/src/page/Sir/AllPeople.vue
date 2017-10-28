@@ -50,7 +50,7 @@ import Axios from 'axios'
         },
         mounted(){
             //Axios.get('./mock/all.json')
-            Axios.get('http://39.108.181.155:8009/AllPeople')
+            Axios.get('/api/AllPeople')
             .then(function(res){
             //成功获取json数据信息的话
             var tem=[];

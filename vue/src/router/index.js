@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import login from '@/page/login/login.vue'
-import login1 from '@/page/login/login1.vue'
-
 
 
 import Sir from '@/page/Sir/index.vue' //一级路由
@@ -16,6 +14,9 @@ import AllTask from '@/page/AllTask.vue'
 import Stu from '@/page/Stu/index.vue'
 import MyTask from '@/page/Stu/MyTask.vue'
 import Hello from '@/components/Hello.vue'
+import SNewTask from '@/page/Stu/NewTask.vue'
+
+import resetPassword from '@/page/resetPassword.vue'
 import axios from 'axios'
 
 
@@ -27,8 +28,9 @@ export default new Router({
     {  path:'/login',
       component:login,
     },
-     {  path:'/login1',
-      component:login1,
+    {
+      path:'/resetPassword',
+      component:resetPassword
     },
     {
       path:'/Sir',
@@ -70,7 +72,8 @@ export default new Router({
         {path:'',component:AllTask},
         {path:'AllTask',component:AllTask},
         {path:'MyTask',component:MyTask},
-        {path:'ManageTask',component:ManageTask}
+        {path:'ManageTask',component:ManageTask},
+        {path:'NewTask',component: SNewTask}
       ]
     }
   ]

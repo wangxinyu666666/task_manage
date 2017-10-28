@@ -103,7 +103,7 @@ export default{
       this.AllTask=tem;
     }.bind(this)
    ).catch(function(){
-     cosole.log("出现错误");
+     console.log("出现错误");
    })
   }
 }
