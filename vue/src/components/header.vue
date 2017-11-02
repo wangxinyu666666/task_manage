@@ -11,6 +11,7 @@
           <span class="el-dropdown-link userinfo-inner"> {{sysUserName}}</span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="person" >个人中心</el-dropdown-item>
+            <el-dropdown-item v-if=Stu @click.native="modify">修改密码</el-dropdown-item>
             <el-dropdown-item  @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -28,10 +29,10 @@ export default {
             searchCriteria: '',
             sysName:'实验室任务管理',
             sysUserName: 'hhh',
-            headerFixed:true
-        }
+            headerFixed:true,
+            Stu:true
+          }
     },
-
     methods:{
       logout() {
         var _this = this;
@@ -57,6 +58,11 @@ export default {
           //是学生
           _this.$router.push('/Stu/Mytask');
         }
+      },
+      modify(){
+        //进入到修改密码的页面
+        var _this=this;
+        _this.$router.push('/resetPassword');
       },
         handleSelect(key, keyPath){
             switch(key){
