@@ -1,12 +1,27 @@
-# task_manage
+# 实验室任务管理系统
 
-实验室任务管理网站
+    该项目是实验室用于管理人员提出的一种革新项目，使用了Vue、Vuex、Vue-router、ElementUI等技术 其主要涉及到了通过登录权限的划分实现不同页面的展示功能
 
-## 网站功能
+## 部署
 
-网站用于我所在实验室日常任务的分配以及每个人的任务量记录。
+### install dependencies
+npm install
 
-管理端（老师）可以添加删除成员，并发布大任务，每个大任务有多名成员和一名组长。
-用户端（实验室同学）,如果是组长，可以将大任务分配为小任务给组员，如果是组员，无须任务操作。
+### serve with hot reload at localhost:8080
+npm run dev
+
+### build for production with minification
+npm run build
+
+### build for production and view the bundle analyzer report
+npm run build --report
+
+## 项目介绍
+
+这个项目是我们实验室的一次关于任务驱动型的一次革新的试水，通过层层的权限划分，模拟公司对于一个项目的划分。具体要求可见：
+
+    link
+
+后端由其他人完成
 
 
